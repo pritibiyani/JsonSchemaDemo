@@ -16,6 +16,12 @@ describe ResponseValidator do
 		puts "Failed: #{response[:errors]}"
 	end
 
+	it 'should return true when only mandatory fields are presenr' do
+		response_validator = ResponseValidator.new(read_resource('book_only_mandatory_fields_present.json'))
+		response  = response_validator.validate_response_for_json_document(read_schema('book_schema.json'))
+		expect(response[:status]).to eq true
+	end
+
 	def read_resource(resource_file)
 		file_path = File.expand_path(File.dirname(__FILE__) + "/../resources/#{resource_file}")
 		contents  = JSON.parse(File.read(file_path))
